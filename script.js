@@ -12,16 +12,14 @@ function Book(title, author, pages, isRead) {
 
 }
 
-function addBookToLibrary() {
-    const title = prompt("Title:");
-    const author = prompt("Author:");
-    const pages = prompt("Number of pages:");
-    const isRead = prompt("Has been read? true/false", false) === "true";
+function addBookToLibrary(title, author, pages, isRead) {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
 }
 
-// Basic test of Book constructor and addBookToLibrary function
-addBookToLibrary();
-addBookToLibrary();
+
+// Create test books
+addBookToLibrary("Hobbit", "JRR Tolkien", 250, true);
+addBookToLibrary("War and Peace", "Tolstoy", 600, false);
+addBookToLibrary("Dune", "Frank Herbert", 300, true);``
 console.log(myLibrary);
