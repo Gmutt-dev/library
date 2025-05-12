@@ -22,4 +22,9 @@
 
 .main-area {
     display: grid;
+    grid-template-columns: repeat(autofill, minmax(100px, 1fr));
+}
+
+.book-container {
+
 }
