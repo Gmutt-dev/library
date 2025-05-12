@@ -16,8 +16,12 @@ function addBookToLibrary() {
     const title = prompt("Title:");
     const author = prompt("Author:");
     const pages = prompt("Number of pages:");
-    const isRead = prompt("Has been read? true/false", false);
+    const isRead = prompt("Has been read? true/false", false) === "true";
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
 }
 
+// Basic test of Book constructor and addBookToLibrary function
+addBookToLibrary();
+addBookToLibrary();
+console.log(myLibrary);
