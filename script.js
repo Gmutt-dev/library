@@ -1,4 +1,4 @@
-const myLibrary = [];
+
 
 function Book(title, author, pages, isRead) {
     if (!new.target) {
@@ -11,7 +11,7 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
-// Add prototype function to Book to toggle isRead
+// TODO: Add prototype chain function to Book to toggle isRead
 Book.prototype.toggleIsRead = function() {
 
 }
@@ -19,6 +19,12 @@ Book.prototype.toggleIsRead = function() {
 function addBookToLibrary(title, author, pages, isRead) {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
+}
+
+// Extracts input fields values from modal and returns an array with the values, that will work as input to addBookToLibrary()
+function getNewBookDetails(textFields, radioButtons) {
+
+    return [textFields[0].value, textFields[1].value, parseInt(textFields[2].value), radioButtons[0].checked];
 }
 
 function clearBookCards() {
@@ -30,10 +36,6 @@ function createBookCard(book) {
     //create new div card
     const newBookCard = document.createElement("div");
     newBookCard.classList.add("book-card");
-    //create <h2> element for card heading
-    const newH2 = document.createElement("h2");
-    newH2.textContent = "Book: ";
-    newBookCard.appendChild(newH2);
     //create book title <p>
     const newTitleP = document.createElement("p");
     newTitleP.textContent = `Title: ${book.title}`;
@@ -64,8 +66,14 @@ function displayBookCards() {
     
 }
 
+// MAIN SCRIPT START //
+
+const myLibrary = [];
+
 // Get DOM .book-container element reference
 const bookContainer = document.querySelector(".book-container");
+// Get DOM .new-book <dialog> reference
+const newBookDialog = document.querySelector(".new-book");
 
 // temp Create test books
 addBookToLibrary("Hobbit", "JRR Tolkien", 250, true);
@@ -74,4 +82,31 @@ addBookToLibrary("Dune", "Frank Herbert", 300, true);``
 console.log(myLibrary);
 // /temp
 
+// On startup show any books already in the library
 displayBookCards();
+
+// Add eventlistener on button that must open the new book modal input dialog
+document.querySelector(".open-new-book-modal-button").addEventListener("click", (e) => {
+    newBookDialog.showModal()
+    }
+);
+
+// Add submit eventlistener on the dialog modal form
+newBookDialog.querySelector("form").addEventListener("submit", (e) => {
+    // Create a new book and add to the library
+    addBookToLibrary(...getNewBookDetails(newBookDialog.querySelectorAll("input[type=text]"), newBookDialog.querySelectorAll("input[type=radio]")));
+    // Reset the form to remove entries
+    newBookDialog.querySelector("form").reset();
+    // redraw the book cards to update the DOM
+    displayBookCards();
+    }
+);
+
+// Reset and close the modal if Cancel button is clicked
+newBookDialog.querySelector("button.cancel-button").addEventListener("click", (e) => {
+    newBookDialog.close();
+    newBookDialog.querySelector("form").reset();    
+    }
+);
+
+// MAIN SCRIPT END //
