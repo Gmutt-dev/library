@@ -22,6 +22,7 @@
 }
 
 .main-container {
+    box-shadow: var(--box-shadows);
     max-width: 1300px;
     margin: 0 auto;
     display: grid;
@@ -29,9 +30,9 @@
 }
 
 .header {
-    grid-column: span 2;
 
-    box-shadow: var(--box-shadows);
+
+    grid-column: span 2;
     background-color: gray;
 
     & h1 {
@@ -69,10 +70,10 @@
 
 .sidebar {
 
+
     display: grid;
     align-items: center;
     gap: 5px;
-    box-shadow: var(--box-shadows);
 
     & > label[for="open-new-book-modal-button"] {
         padding: 10px;
