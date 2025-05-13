@@ -1,4 +1,55 @@
+// MAIN SCRIPT START //
 
+const myLibrary = [];
+
+// Get DOM .title-list element reference
+const titleList = document.querySelector(".title-list");
+// Get DOM .book-container element reference
+const bookContainer = document.querySelector(".book-container");
+// Get DOM .new-book <dialog> reference
+const newBookDialog = document.querySelector(".new-book");
+
+// On startup show any books already in the library
+displayBooks();
+
+// Add eventlistener on button that must open the new book modal input dialog
+document.querySelector(".open-new-book-modal-button").addEventListener("click", (e) => {
+    newBookDialog.showModal()
+    }
+);
+
+// Add submit eventlistener on the dialog modal form
+newBookDialog.querySelector("form").addEventListener("submit", (e) => {
+    // Create a new book and add to the library
+    addBookToLibrary(...getNewBookDetails(newBookDialog.querySelectorAll("input[type=text]"), newBookDialog.querySelectorAll("input[type=radio]")));
+    // Reset the form to remove entries
+    newBookDialog.querySelector("form").reset();
+    // Redraw the book cards to update the DOM
+    displayBooks();
+    }
+);
+
+// Reset and close the modal if Cancel button is clicked
+newBookDialog.querySelector("button.cancel-button").addEventListener("click", (e) => {
+    newBookDialog.close();
+    newBookDialog.querySelector("form").reset();    
+    }
+);
+
+// Eventlistener on book cards
+bookContainer.addEventListener("click", (e) => {
+    // Click on "remove book" button
+    if (e.target.textContent === "remove book") {
+        removeBookFromLibraryById(e.target.dataset.id);
+        displayBooks();
+    // Click on "mark read" / "mark unread" button
+    } else if (e.target.classList.contains("read-toggle")) {
+        getBookById(e.target.parentElement.dataset.id).toggleIsRead();
+        displayBooks();
+    }
+})
+
+// MAIN SCRIPT END //
 
 function Book(title, author, pages, isRead) {
     if (!new.target) {
@@ -11,7 +62,6 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
-// TODO: Add prototype chain function to Book to toggle isRead
 Book.prototype.toggleIsRead = function() {
     this.isRead = !this.isRead;
 }
@@ -56,7 +106,6 @@ function clearBookCards() {
 }
 
 function createBookCard(book) {
-    
     //create new div card
     const newBookCard = document.createElement("div");
     newBookCard.classList.add("book-card");
@@ -101,67 +150,10 @@ function displayBookCards() {
     
 }
 
+// Displays book titles in sidebar AND book cards
 function displayBooks() {
     displayTitleList();
     displayBookCards();
 }
 
-// MAIN SCRIPT START //
-
-const myLibrary = [];
-
-// Get DOM .title-list element reference
-const titleList = document.querySelector(".title-list");
-// Get DOM .book-container element reference
-const bookContainer = document.querySelector(".book-container");
-// Get DOM .new-book <dialog> reference
-const newBookDialog = document.querySelector(".new-book");
-
-// temp Create test books
-addBookToLibrary("Hobbit", "JRR Tolkien", 250, true);
-addBookToLibrary("War and Peace", "Tolstoy", 600, false);
-addBookToLibrary("Dune", "Frank Herbert", 300, true);``
-// /temp
-
-// On startup show any books already in the library
-displayBooks();
-
-// Add eventlistener on button that must open the new book modal input dialog
-document.querySelector(".open-new-book-modal-button").addEventListener("click", (e) => {
-    newBookDialog.showModal()
-    }
-);
-
-// Add submit eventlistener on the dialog modal form
-newBookDialog.querySelector("form").addEventListener("submit", (e) => {
-    // Create a new book and add to the library
-    addBookToLibrary(...getNewBookDetails(newBookDialog.querySelectorAll("input[type=text]"), newBookDialog.querySelectorAll("input[type=radio]")));
-    // Reset the form to remove entries
-    newBookDialog.querySelector("form").reset();
-    // redraw the book cards to update the DOM
-    displayBooks();
-    }
-);
-
-// Reset and close the modal if Cancel button is clicked
-newBookDialog.querySelector("button.cancel-button").addEventListener("click", (e) => {
-    newBookDialog.close();
-    newBookDialog.querySelector("form").reset();    
-    }
-);
-
-// Eventlistener on book cards
-bookContainer.addEventListener("click", (e) => {
-    // Click on "remove book" button
-    if (e.target.textContent === "remove book") {
-        removeBookFromLibraryById(e.target.dataset.id);
-        displayBooks();
-    // Click on "mark read" / "mark unread" button
-    } else if (e.target.classList.contains("read-toggle")) {
-        getBookById(e.target.parentElement.dataset.id).toggleIsRead();
-        displayBooks();
-    }
-})
-
-// MAIN SCRIPT END //
 
