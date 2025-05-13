@@ -24,6 +24,7 @@
 .main-container {
     box-shadow: var(--box-shadows);
     max-width: 1300px;
+    min-width: 600px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -73,10 +74,11 @@
 
     display: grid;
     align-items: center;
+    align-content:start;
     gap: 5px;
 
     & > label[for="open-new-book-modal-button"] {
-        padding: 10px;
+        padding: 15px;
     }
     
     
@@ -99,33 +101,52 @@
 
     & .title-list {
         list-style: none;
-        /* border-top: 2px solid lightgrey; */
-        /* border-bottom: 2px solid lightgrey; */
-
         display: grid;
 
         & > li {
             overflow-x: auto;
-            padding: 5px;
+            padding: 5px 10px;
         } 
 
         & > li:nth-of-type(odd) {
-            background-color: lightgrey;
+            background-color: darkgray;
         }
     }
 }
 
 .main-area {
-    margin: 10px;
+    padding: 20px;
+    box-shadow: inset 4px 4px 8px -2px darkgray;
+    background: rgb(240, 240, 240);
+
+    & > h2 {
+        text-decoration: underline;
+    }
 
     & .book-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 10px;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
 
         & > .book-card {
+            padding: 15px;
             overflow-x: auto;
+            border-radius: 5px;
+            box-shadow: var(--box-shadows);
+            background-color: white;
+
+            display: grid;
+            gap: 5px;
         }
-    
+        
+        & button {
+            width: 110px;
+            padding: 5px 0;
+            margin: 2px;
+            box-shadow: var(--box-shadows);
+            justify-self: right;
+        }
     }
 }
 
@@ -133,13 +154,53 @@
 .new-book {
     margin: auto;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadows);
+    border: none;
 
     &::backdrop {
         background-color: rgb(0 0 0 / 25%);
         backdrop-filter: blur(4px);
     }
 
+    > h2 {
+        margin-bottom: 10px;
+    }
+
+    & form {
+        display: grid;
+        gap: 5px;
+
+        > div {
+            display: flex;
+
+            > input {
+                margin-left: auto;
+                height: 25px;
+                width: 240px;
+            }
+
+        }
+    }
+
     & label {
-        padding: 10px;
+
+    }
+
+    & fieldset {
+
+    }
+
+    & div:last-of-type {
+        justify-self: right;
+        gap: 5px;
+    }
+
+    & button {
+
+        width: 70px;
+        padding: 2px 0;
+        margin: 2px;
+        box-shadow: var(--box-shadows);
     }
 }
