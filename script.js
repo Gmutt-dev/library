@@ -21,6 +21,11 @@ function addBookToLibrary(title, author, pages, isRead) {
     myLibrary.push(newBook);
 }
 
+function removeBookFromLibraryById(id) {
+    const index = myLibrary.findIndex((book) => book.id === id);
+    myLibrary.splice(index, 1);
+}
+
 // Extracts input fields values from modal and returns an array with the values, that will work as input to addBookToLibrary()
 function getNewBookDetails(textFields, radioButtons) {
 
@@ -36,6 +41,7 @@ function createBookCard(book) {
     //create new div card
     const newBookCard = document.createElement("div");
     newBookCard.classList.add("book-card");
+    newBookCard.dataset.id = book.id;
     //create book title <p>
     const newTitleP = document.createElement("p");
     newTitleP.textContent = `Title: ${book.title}`;
@@ -52,6 +58,11 @@ function createBookCard(book) {
     const newIsReadP = document.createElement("p");
     newIsReadP.textContent = `Has been read?: ${book.isRead}`;
     newBookCard.appendChild(newIsReadP);
+    //create remove book button and include book id in dataset
+    const newRemoveBtn = document.createElement("button");
+    newRemoveBtn.textContent = "remove book";
+    newRemoveBtn.dataset.id = book.id;
+    newBookCard.appendChild(newRemoveBtn);
 
     return newBookCard;
 }
@@ -109,4 +120,13 @@ newBookDialog.querySelector("button.cancel-button").addEventListener("click", (e
     }
 );
 
+// Eventlistener on book cards
+bookContainer.addEventListener("click", (e) => {
+    if (e.target.textContent === "remove book") {
+        removeBookFromLibraryById(e.target.dataset.id);
+        displayBookCards();
+    }
+})
+
 // MAIN SCRIPT END //
+
