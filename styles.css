@@ -12,6 +12,7 @@
     padding: 0;
     margin: 0;
     font-size: 1rem;
+    box-sizing: border-box;
 }
 :root {
     font-size: 16px;
@@ -19,6 +20,8 @@
 }
 
 .main-container {
+    max-width: 1300px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: max-content 1fr;
 }
@@ -30,14 +33,35 @@
     background-color: gray;
 
     & h1 {
-        font-size: 4rem;
+        padding-bottom: 25px;
         text-shadow: 4px 4px 4px white ;
-        padding-left: 30px;
-        padding-bottom: 10px;
-
-        &::first-letter {
-            font-size: 6rem;
+        line-height:1.2;
+        
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        
+        & span {
+            display: block;
         }
+        
+        & span:first-of-type {
+            font-size: 2rem;
+            margin-top: 25px;
+            border-top: 5px solid black;
+        }
+        
+        & span:nth-of-type(2) {
+            font-size: 4rem;
+            border-bottom: 5px solid black;
+            &::first-letter {
+                font-size: 6rem;
+
+            }
+
+            
+        }
+        
     }
 }
 
