@@ -13,7 +13,7 @@ function Book(title, author, pages, isRead) {
 
 // TODO: Add prototype chain function to Book to toggle isRead
 Book.prototype.toggleIsRead = function() {
-
+    this.isRead = !this.isRead;
 }
 
 function addBookToLibrary(title, author, pages, isRead) {
@@ -24,6 +24,12 @@ function addBookToLibrary(title, author, pages, isRead) {
 function removeBookFromLibraryById(id) {
     const index = myLibrary.findIndex((book) => book.id === id);
     myLibrary.splice(index, 1);
+}
+
+function getBookById(id) {
+    const foundBook = myLibrary.find(book => book.id === id);
+
+    return foundBook;
 }
 
 // Extracts input fields values from modal and returns an array with the values, that will work as input to addBookToLibrary()
@@ -58,6 +64,11 @@ function createBookCard(book) {
     const newIsReadP = document.createElement("p");
     newIsReadP.textContent = `Has been read?: ${book.isRead}`;
     newBookCard.appendChild(newIsReadP);
+    //create toggle isRead button
+    const newToggleIsReadButton = document.createElement("button");
+    newToggleIsReadButton.textContent = book.isRead ? "mark unread" : "mark read";
+    newToggleIsReadButton.classList.add("read-toggle");
+    newBookCard.appendChild(newToggleIsReadButton);
     //create remove book button and include book id in dataset
     const newRemoveBtn = document.createElement("button");
     newRemoveBtn.textContent = "remove book";
@@ -90,7 +101,6 @@ const newBookDialog = document.querySelector(".new-book");
 addBookToLibrary("Hobbit", "JRR Tolkien", 250, true);
 addBookToLibrary("War and Peace", "Tolstoy", 600, false);
 addBookToLibrary("Dune", "Frank Herbert", 300, true);``
-console.log(myLibrary);
 // /temp
 
 // On startup show any books already in the library
@@ -124,6 +134,10 @@ newBookDialog.querySelector("button.cancel-button").addEventListener("click", (e
 bookContainer.addEventListener("click", (e) => {
     if (e.target.textContent === "remove book") {
         removeBookFromLibraryById(e.target.dataset.id);
+        displayBookCards();
+    // Click on "mark read" / "mark unread" button
+    } else if (e.target.classList.contains("read-toggle")) {
+        getBookById(e.target.parentElement.dataset.id).toggleIsRead();
         displayBookCards();
     }
 })
