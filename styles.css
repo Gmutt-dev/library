@@ -19,6 +19,10 @@
 .sidebar {
     display: flex;
     flex-direction: column;
+
+    & .title-list {
+        list-style: none;
+    }
 }
 
 .main-area {
