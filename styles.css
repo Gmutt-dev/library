@@ -71,7 +71,7 @@
     align-content:start;
     gap: 5px;
 
-    & > label[for="open-new-book-modal-button"] {
+    & > p[for="open-new-book-modal-button"] {
         padding: 15px;
     }
     
